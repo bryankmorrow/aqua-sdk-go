@@ -13,3 +13,19 @@ func (cli *Client) CalcNext(remaining, next int) (int, int) {
 	}
 	return remaining, next
 }
+
+// GetParams creates a string from a string map of parameters
+func (cli *Client) GetParams(params map[string]string) string {
+	var paramString string
+	// iterate through the map of params
+	i := 1
+	for k, v := range params {
+		if i == 1 {
+			paramString = k + "=" + v
+		} else {
+			paramString = paramString + "&" + k + "=" + v
+		}
+		i++
+	}
+	return paramString
+}

@@ -2,7 +2,6 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/BryanKMorrow/aqua-sdk-go/types/dashboard"
@@ -18,7 +17,7 @@ func (cli *Client) GetOverview(paramsString map[string]string) dashboard.Overvie
 	var response = dashboard.Overview{}
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
-	apiPath := fmt.Sprintf("/api/v1/dashboard")
+	apiPath := "/api/v1/dashboard"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).Query(paramString).End()
 	log.Printf("Calling %s%s", cli.url, apiPath)

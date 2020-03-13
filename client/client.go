@@ -2,10 +2,10 @@
 This is a Golang client for the Aqua Cloud Native Security REST API.
 
 Usage
-TODO
+
 */
 
-package client
+package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
 	"encoding/json"

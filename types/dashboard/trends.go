@@ -1,4 +1,4 @@
-package dashboard
+package dashboard // import "github.com/BryanKMorrow/aqua-sdk-go/types/dashboard
 
 // Trends returns the v1/dashboard/<trend>/trends request
 type Trends []struct {

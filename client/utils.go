@@ -1,4 +1,4 @@
-package client
+package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import "strconv"
 

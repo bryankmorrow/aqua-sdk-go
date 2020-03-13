@@ -1,4 +1,4 @@
-package dashboard
+package dashboard // import "github.com/BryanKMorrow/aqua-sdk-go/types/dashboard
 
 // Overview is the response from v1/dashboard
 type Overview struct {

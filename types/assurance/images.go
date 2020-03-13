@@ -1,4 +1,4 @@
-package assurance
+package assurance // import "github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
 
 import "time"
 

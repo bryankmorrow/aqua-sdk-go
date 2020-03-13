@@ -1,4 +1,4 @@
-package images
+package images  // import "github.com/BryanKMorrow/aqua-sdk-go/types/images
 
 // Layers response from v2/images/registry/repo/tag/history_layers
 type Layers struct {

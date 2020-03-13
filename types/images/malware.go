@@ -1,4 +1,4 @@
-package images  // import "github.com/BryanKMorrow/aqua-sdk-go/types/images
+package images  // import "github.com/BryanKMorrow/aqua-sdk-go/types/images"
 
 import "time"
 

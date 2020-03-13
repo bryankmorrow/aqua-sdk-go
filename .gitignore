@@ -1,2 +1,6 @@
 main.go
 *.json
+*.iml
+*.xml
+.idea
+

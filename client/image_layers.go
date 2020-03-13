@@ -10,7 +10,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-// GetLayers - retrieves all layers from a partcular image
+// GetLayers - retrieves all layers from a particular image
 // Accepts the registry, repo and tag strings as well as the page number, pagesize and params map
 // Returns response struct, remaining count and next page
 // v2/images

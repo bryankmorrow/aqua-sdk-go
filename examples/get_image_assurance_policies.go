@@ -18,11 +18,8 @@ func main() {
 	if !connected {
 		log.Fatalln("Failed to retrieve JWT Authorization Token")
 	} else {
-		// Get assurance policy identifiers only, not the detailed data.
-		params := make(map[string]string)
-		params["identifiers_only"] = "true"
-		// Get a list of all assurance policy types (Image, Host, Function, CF)
-		detail := cli.GetAssurancePolicies(params)
+		// Get only Image Assurance Policies
+		detail := cli.GetImageAssurance()
 		for _, d := range detail.Result {
 			log.Printf("Type: %s   Name: %s  Description: %s  Last Updated: %v", d.AssuranceType, d.Name, d.Description, d.Lastupdate)
 		}

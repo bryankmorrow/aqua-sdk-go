@@ -1,35 +1,28 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
-
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
+	"github.com/BryanKMorrow/aqua-sdk-go/types/gateways"
 	"github.com/parnurzeal/gorequest"
 	"log"
 )
 
-// GetImageAssurance
-func (cli *Client) GetImageAssuranceName(name string) (assurance.Image, error) {
-	var err error
-	var response = assurance.Image{}
+// GetGateways
+func (cli *Client) GetGateways() gateways.Gateways {
+	var response = gateways.Gateways{}
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
-	apiPath := fmt.Sprintf("/api/v2/image_assurance/%s", name)
+	apiPath := "/api/v1/servers"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}
 	if events.StatusCode == 200 {
-		err = json.Unmarshal([]byte(body), &response)
+		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
 			log.Printf("Error calling func GetImageAssuranceName from %s%s, %v ", cli.url, apiPath, err.Error())
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}
-	if response.Name == "" {
-		err = fmt.Errorf("image assurance policy not found: %s", name)
-	}
-	return response, err
-	}
-
+	return response
+}

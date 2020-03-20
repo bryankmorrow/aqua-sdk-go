@@ -9,7 +9,7 @@ type Registry []struct {
 	Author                   string      `json:"author"`
 	Lastupdate               int         `json:"lastupdate"`
 	URL                      string      `json:"url"`
-	Username                 string      `json:"username"`
+	Username                 string      `json:"-"`
 	AutoPull                 bool        `json:"auto_pull"`
 	AutoPullTime             string      `json:"auto_pull_time"`
 	AutoPullMax              int         `json:"auto_pull_max"`

@@ -50,8 +50,34 @@ type SingleResponse struct {
 		DockerLabels  []string  `json:"docker_labels"`
 		ImageType     string    `json:"image_type"`
 	} `json:"metadata"`
+	History []struct {
+		ID        string `json:"id"`
+		Size      int    `json:"size"`
+		Comment   string `json:"comment"`
+		Created   string `json:"created"`
+		CreatedBy string `json:"created_by"`
+	} `json:"history"`
 	AssuranceResults struct {
 		Disallowed bool `json:"disallowed"`
+		ChecksPerformed []struct {
+			PolicyName           string   `json:"policy_name"`
+			AssuranceType        string   `json:"assurance_type"`
+			Failed               bool     `json:"failed"`
+			Blocking             bool     `json:"blocking"`
+			Control              string   `json:"control"`
+			SensitiveDataFound   int32    `json:"sensitive_data_found,omitempty"`
+			MaxSeverityAllowed   string   `json:"max_severity_allowed,omitempty"`
+			MaxSeverityFound     string   `json:"max_severity_found,omitempty"`
+			MalwareFound         int64    `json:"malware_found,omitempty"`
+			RootUserFound        bool     `json:"root_user_found,omitempty"`
+			BlacklistedCvesFound []string `json:"blacklisted_cves_found,omitempty"`
+			CustomChecksFailed   []struct {
+				ScriptName string `json:"script_name"`
+				ScriptType string `json:"script_type"`
+				ExitCode   int    `json:"exit_code"`
+				Output     string `json:"output"`
+			} `json:"custom_checks_failed,omitempty"`
+		} `json:"checks_performed"`
 	} `json:"assurance_results"`
 	PendingDisallowed     bool `json:"pending_disallowed"`
 	MicroenforcerDetected bool `json:"microenforcer_detected"`

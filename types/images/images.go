@@ -11,6 +11,7 @@ type AllResponse struct {
 		Registry         string      `json:"registry"`
 		Name             string      `json:"name"`
 		VulnsFound       int         `json:"vulns_found"`
+		CritVulns	     int         `json:"crit_vulns"`
 		HighVulns        int         `json:"high_vulns"`
 		MedVulns         int         `json:"med_vulns"`
 		LowVulns         int         `json:"low_vulns"`

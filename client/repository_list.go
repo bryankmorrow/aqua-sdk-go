@@ -4,17 +4,24 @@ import (
 	"github.com/BryanKMorrow/aqua-sdk-go/types/images"
 	"github.com/parnurzeal/gorequest"
 	"log"
+	"strconv"
 )
 
 // GetRepositories - retrieves all configured repositories
 // Returns Repository struct
 // Path - api/v2/repositories
-func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]string) images.Repositories {
+func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]string) (images.Repositories, int, int, int) {
+	// set the default pagesize
+	if pagesize == 0 {
+		pagesize = 1000
+	}
 	var response = images.Repositories{}
+	paramString := cli.GetStringParams(paramsString)
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
-	apiPath := "/api/v1/registries"
-	events, body, errs := request.Clone().Get(cli.url+apiPath).End()
+	apiPath := "/api/v2/repositories"
+	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
+		Query(paramString).End()
 	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
@@ -26,5 +33,8 @@ func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]s
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}
-	return response
+	remaining := cli.CalcRemaining(pagesize, page, response.Count)
+	page = response.Page + 1
+	remaining, next := cli.CalcNext(remaining, page)
+	return response, remaining, next, response.Count
 }

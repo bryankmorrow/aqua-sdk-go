@@ -16,10 +16,10 @@ func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]s
 		pagesize = 1000
 	}
 	var response = images.Repositories{}
-	paramString := cli.GetStringParams(paramsString)
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/repositories"
+	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).End()
 	log.Printf("Calling %s%s", cli.url, apiPath)

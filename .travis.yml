@@ -5,4 +5,4 @@ go:
 
 env:
   global:
-    GO111MODULE: "on"
+    GO111MODULE: "off"

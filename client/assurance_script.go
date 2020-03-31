@@ -8,8 +8,10 @@ import (
 )
 
 // GetAssuranceScriptID - retrieves user created assurance script by ID
+// Params: ID: string representation of the script ID (0,1,2 etc)
 // Path - /api/v2/image_assurance/user_scripts/<ID>
-// Returns assurance.Script struct
+// Returns: Struct from types/assurance/script
+
 func (cli *Client) GetAssuranceScriptID(ID string) assurance.Script {
 	var response = assurance.Script{}
 	request := gorequest.New()

@@ -7,9 +7,8 @@ import (
 )
 
 // GetAssuranceScripts - retrieves user created assurance scripts
-// Path - /api/v2/image_assurance/user_scripts
-// Query Params - search, order_by (name|num_users), engine (ab|sh|yaml), type (), name, id
-// Returns assurance.Scripts struct
+// Params:  search, order_by (name|num_users), engine (ab|sh|yaml), type (), name, id
+// Returns: Struct from types/assurance/scripts
 func (cli *Client) GetAssuranceScripts(paramsString  map[string]string) assurance.Scripts {
 	var response = assurance.Scripts{}
 	request := gorequest.New()

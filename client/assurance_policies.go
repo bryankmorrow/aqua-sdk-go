@@ -6,10 +6,9 @@ import (
 	"log"
 )
 
-// GetAssurancePolicies gets all Assurance Policy types
-// Query Parameters - identifiers_only bool (true|false), order_by string (name)
-// Path - v2/assurance_policy
-// Returns - assurance.Policies structure
+// GetAssurancePolicies - gets all Assurance Policy types
+// Params: identifiers_only bool (true|false), order_by string (name)
+// Returns: Struct from types/assurance/policies
 func (cli *Client) GetAssurancePolicies (paramsString map[string]string) assurance.Policies {
 	var response = assurance.Policies{}
 	request := gorequest.New()

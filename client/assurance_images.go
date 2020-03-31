@@ -7,7 +7,8 @@ import (
 	"log"
 )
 
-// GetImageAssurance
+// GetImageAssurance - Gets all image assurance policies
+// Returns: Struct from types/assurance/images
 func (cli *Client) GetImageAssurance() assurance.Images {
 	var response = assurance.Images{}
 	request := gorequest.New()

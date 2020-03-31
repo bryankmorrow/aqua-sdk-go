@@ -1,4 +1,5 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
+
 import (
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
@@ -7,7 +8,7 @@ import (
 )
 
 // GetImagePermissions returns the globally whitelisted and blacklisted images
-// Response is PermissionList struct
+// Returns: Struct from types/assurance/permission-list
 func (cli *Client) GetImagePermissions() assurance.PermissionList {
 	var response = assurance.PermissionList{}
 	request := gorequest.New()

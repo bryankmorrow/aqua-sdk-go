@@ -3,11 +3,14 @@ package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import "strconv"
 
 // CalcRemaining - determine the remaining amount of items based on count, pagesize and current page number
+// Accepts - Pagesize, Current Page and Total Count (int)
+// Returns - int of remaining items
 func (cli *Client) CalcRemaining(pagesize, page, count int) int {
 	return count - pagesize*page
 }
 
 // CalcNext determines if there are remaining items and return 0 if not
+// Accepts - Remaining count of items and the next page in the query
 func (cli *Client) CalcNext(remaining, next int) (int, int) {
 	if remaining <= 0 {
 		remaining = 0
@@ -16,7 +19,9 @@ func (cli *Client) CalcNext(remaining, next int) (int, int) {
 	return remaining, next
 }
 
-// GetStringParams creates a string from a string map of parameters
+// GetStringParams builds a string from a string map of parameters
+// Accepts - Parameter map of strings
+// Returns - String formatted for URL query (key=value)
 func (cli *Client) GetStringParams(params map[string]string) string {
 	var paramString string
 	// iterate through the map of params
@@ -33,6 +38,8 @@ func (cli *Client) GetStringParams(params map[string]string) string {
 }
 
 // GetBoolParams creates a string from a map of boolean parameters
+// Accepts - Parameter map of bool
+// Returns - String formatted for URL query (key=value)
 func (cli *Client) GetBoolParams(params map[string]bool) string {
 	var paramBool string
 	// iterate through the map of params

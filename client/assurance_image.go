@@ -8,7 +8,9 @@ import (
 	"log"
 )
 
-// GetImageAssurance
+// GetImageAssurance - This returns the Image Assurance Policy by name
+// Params: name: The name of the Image Assurance Policy
+// Returns: The struct from types/assurance/image
 func (cli *Client) GetImageAssuranceName(name string) (assurance.Image, error) {
 	var err error
 	var response = assurance.Image{}

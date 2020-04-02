@@ -1,4 +1,5 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
+
 import (
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/images"

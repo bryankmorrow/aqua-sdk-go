@@ -6,6 +6,9 @@ import "strconv"
 // Accepts - Pagesize, Current Page and Total Count (int)
 // Returns - int of remaining items
 func (cli *Client) CalcRemaining(pagesize, page, count int) int {
+	if page == 0 {
+		return count - pagesize
+	}
 	return count - pagesize*page
 }
 

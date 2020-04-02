@@ -20,7 +20,16 @@ func main() {
 	} else {
 		detail := cli.GetRegistries()
 		for _, d := range detail {
-			log.Printf("Type: %s  Name: %s  Description: %s  URL: %s", d.Type, d.Name, d.Description, d.URL)
+			params := make(map[string]string)
+			params["include_vpatch_info"] = "true"
+			params["show_negligible"] = "true"
+			params["skip_count"] = "false"
+			params["hide_base_image"] = "false"
+			params["fix_availability"] = "true"
+			params["order_by"] = "-image"
+			params["registry_name"] = d.Name
+			vulns := cli.GetRiskVulnerabilities(0, 0, params)
+			log.Printf("Type: %s  Name: %s  Description: %s  URL: %s  Vulnerability Count: %d", d.Type, d.Name, d.Description, d.URL, vulns.Count)
 		}
 	}
 }

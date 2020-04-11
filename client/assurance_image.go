@@ -3,12 +3,13 @@ package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+
 	"github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
 	"github.com/parnurzeal/gorequest"
-	"log"
 )
 
-// GetImageAssurance - This returns the Image Assurance Policy by name
+// GetImageAssuranceName - This returns the Image Assurance Policy by name
 // Params: name: The name of the Image Assurance Policy
 // Returns: The struct from types/assurance/image
 func (cli *Client) GetImageAssuranceName(name string) (assurance.Image, error) {
@@ -101,7 +102,7 @@ func (cli *Client) CreateImageAssurance(policy assurance.Image) string {
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/image_assurance")
-	resp, _, errs := request.Clone().Post(cli.url+apiPath).Send(string(payload)).End()
+	resp, _, errs := request.Clone().Post(cli.url + apiPath).Send(string(payload)).End()
 	if errs != nil {
 		log.Printf("Failed creating assurance policy: %s \n  Status Code: %d", cli.url+apiPath, resp.StatusCode)
 	}
@@ -119,4 +120,3 @@ func (cli *Client) CreateImageAssurance(policy assurance.Image) string {
 	}
 	return response
 }
-

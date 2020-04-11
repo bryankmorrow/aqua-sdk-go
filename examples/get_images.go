@@ -19,12 +19,10 @@ func main() {
 	if !connected {
 		log.Fatalln("Failed to retrieve JWT Authorization Token")
 	} else {
-		// Get a single image
-		detail, err := cli.GetImage("registry", "repository", "tag")
-		if err == nil {
-			log.Printf("Image: %s  Non-Compliant: %v  Total Vulns: %d  Critical Vulns: %d  High Vulns: %d", detail.Name, detail.Disallowed, detail.VulnsFound, detail.CritVulns, detail.HighVulns)
-		} else {
-			log.Printf(err.Error())
-		}
+		params := make(map[string]string)
+		params["registry"] = "Docker Hub"
+		params["fix_availability"] = "true"
+		vulns, _, _, _ := cli.GetAllImages(0, 0, params, nil)
+		log.Println(vulns.Result)
 	}
 }

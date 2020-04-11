@@ -1,12 +1,13 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import (
 	"encoding/json"
+	"log"
+
 	"github.com/BryanKMorrow/aqua-sdk-go/types/gateways"
 	"github.com/parnurzeal/gorequest"
-	"log"
 )
 
-// GetGateways
+// GetGateways retrives the list of gateways
 func (cli *Client) GetGateways() gateways.Gateways {
 	var response = gateways.Gateways{}
 	request := gorequest.New()

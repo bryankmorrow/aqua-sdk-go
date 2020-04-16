@@ -39,6 +39,7 @@ func NewClient(url, user, password string) *Client {
 }
 
 // GetAuthToken - Connect to Aqua and return a JWT bearerToken (string)
+// Return: bool - successfully connected?
 func (cli *Client) GetAuthToken() bool {
 	var connected bool
 	request := gorequest.New()

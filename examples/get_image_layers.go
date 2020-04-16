@@ -1,10 +1,9 @@
 package main
 
 import (
+	"github.com/BryanKMorrow/aqua-sdk-go/client"
 	"log"
 	"os"
-
-	"github.com/BryanKMorrow/aqua-sdk-go/client"
 )
 
 func main() {
@@ -19,10 +18,8 @@ func main() {
 	if !connected {
 		log.Fatalln("Failed to retrieve JWT Authorization Token")
 	} else {
-		params := make(map[string]string)
-		params["registry"] = "Docker Hub"
-		params["fix_availability"] = "true"
-		vulns, _, _, _ := cli.GetAllImages(0, 0, params, nil)
-		log.Println(vulns)
+
+		layers, _, _, _ := cli.GetLayers("aquademo", "orders-nginx", "1.0", 0, 0, nil, nil)
+		log.Println(layers)
 	}
 }

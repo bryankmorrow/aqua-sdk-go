@@ -12,10 +12,10 @@ import (
 
 // GetImage -  retrieves a single image based on registry, repo and tag
 // Accepts the registry, repo and tag
-// Returns response struct
+// Returns Image struct
 // v2/images/registry/repo/tag
-func (cli *Client) GetImage(registry, repo, tag string) (images.SingleResponse, error) {
-	var response = images.SingleResponse{}
+func (cli *Client) GetImage(registry, repo, tag string) (images.Image, error) {
+	var response = images.Image{}
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s", registry, repo, tag)

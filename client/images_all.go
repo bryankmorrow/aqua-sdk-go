@@ -12,14 +12,14 @@ import (
 
 // GetAllImages - retrieves all registered Images with params and pagination
 // Accepts the CSP struct, page number, pagesize and params map
-// Returns response struct, remaining count and next page
+// Returns Images struct, remaining count and next page
 // v2/images
-func (cli *Client) GetAllImages(page, pagesize int, paramsString map[string]string, paramsBool map[string]bool) (images.AllResponse, int, int, int) {
+func (cli *Client) GetAllImages(page, pagesize int, paramsString map[string]string, paramsBool map[string]bool) (images.Images, int, int, int) {
 	// set the default pagesize
 	if pagesize == 0 {
 		pagesize = 1000
 	}
-	var response = images.AllResponse{}
+	var response = images.Images{}
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/images"

@@ -1,9 +1,9 @@
-package images  // import "github.com/BryanKMorrow/aqua-sdk-go/types/images"
+package images // import "github.com/BryanKMorrow/aqua-sdk-go/types/images"
 
 import "time"
 
-// SingleResponse - API response to v2/images/registry/repo/tag
-type SingleResponse struct {
+// Image - API response to v2/images/{registry}/{repo}/{tag}
+type Image struct {
 	Registry         string    `json:"registry"`
 	Name             string    `json:"name"`
 	VulnsFound       int       `json:"vulns_found"`
@@ -58,7 +58,7 @@ type SingleResponse struct {
 		CreatedBy string `json:"created_by"`
 	} `json:"history"`
 	AssuranceResults struct {
-		Disallowed bool `json:"disallowed"`
+		Disallowed      bool `json:"disallowed"`
 		ChecksPerformed []struct {
 			PolicyName           string   `json:"policy_name"`
 			AssuranceType        string   `json:"assurance_type"`

@@ -19,7 +19,7 @@ func (cli *Client) GetLayers(registry, repo, tag string, page, pagesize int, par
 	if pagesize == 0 {
 		pagesize = 1000
 	}
-	var response = images.Layers{}
+	var response images.Layers
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/history_layers", registry, repo, tag)
@@ -54,10 +54,10 @@ func (cli *Client) GetLayers(registry, repo, tag string, page, pagesize int, par
 	return newResponse, remaining, next, response.Count
 }
 
-func removeDuplicates(response images.Layers) images.LayerResult {
+func removeDuplicates(response images.Layers) []images.Layer {
 	// Use map to record duplicates as we find them.
 	encountered := map[string]bool{}
-	result := images.LayerResult{}
+	var result []images.Layer
 
 	for _, layer := range response.Result {
 		if encountered[layer.ID] == true {

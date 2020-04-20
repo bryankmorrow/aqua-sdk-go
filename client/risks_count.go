@@ -10,12 +10,11 @@ import (
 // Returns risks.Counts struct
 // Path - v2/risks
 func (cli *Client) GetRiskCount() risks.Counts {
-	var response = risks.Counts{}
+	var response risks.Counts
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	//log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

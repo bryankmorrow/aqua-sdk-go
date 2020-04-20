@@ -19,7 +19,7 @@ func (cli *Client) GetAllImages(page, pagesize int, paramsString map[string]stri
 	if pagesize == 0 {
 		pagesize = 1000
 	}
-	var response = images.Images{}
+	var response images.Images
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/images"
@@ -27,7 +27,6 @@ func (cli *Client) GetAllImages(page, pagesize int, paramsString map[string]stri
 	paramBool := cli.GetBoolParams(paramsBool)
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).Query(paramBool).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

@@ -16,7 +16,6 @@ func (cli *Client) GetEnforcerGroups() []enforcers.GroupResponse {
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/hostsbatch"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

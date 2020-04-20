@@ -10,12 +10,11 @@ import (
 // GetImagePermissions returns the globally whitelisted and blacklisted images
 // Returns: Struct from types/assurance/permission-list
 func (cli *Client) GetImagePermissions() assurance.PermissionList {
-	var response = assurance.PermissionList{}
+	var response assurance.PermissionList
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/image_assurance/image_permissions"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

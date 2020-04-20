@@ -14,12 +14,11 @@ import (
 // Returns sensitive struct
 // v2/images/registry/repo/tag/sensitive
 func (cli *Client) GetSensitive(registry, repo, tag string) images.Sensitive {
-	var response = images.Sensitive{}
+	var response images.Sensitive
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/sensitive", registry, repo, tag)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

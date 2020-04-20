@@ -27,7 +27,6 @@ func (cli *Client) GetLayers(registry, repo, tag string, page, pagesize int, par
 	paramBool := cli.GetBoolParams(paramsBool)
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).Query(paramBool).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

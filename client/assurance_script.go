@@ -13,12 +13,11 @@ import (
 // Path - /api/v2/image_assurance/user_scripts/<ID>
 // Returns: Struct from types/assurance/script
 func (cli *Client) GetAssuranceScriptID(ID string) assurance.Script {
-	var response = assurance.Script{}
+	var response assurance.Script
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/image_assurance/user_scripts/%s", ID)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

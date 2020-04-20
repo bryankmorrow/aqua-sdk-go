@@ -10,12 +10,11 @@ import (
 // Returns Registry struct
 // Path - v1/registries
 func (cli *Client) GetRegistries() registry.Registry {
-	var response = registry.Registry{}
+	var response registry.Registry
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/registries"
-	events, body, errs := request.Clone().Get(cli.url+apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
+	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

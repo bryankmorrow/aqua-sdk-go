@@ -12,7 +12,7 @@ import (
 // Payload - JSON
 // Returns enforcers.GroupResponse struct
 func (cli *Client) CreateEnforcerGroup(group enforcers.Group) enforcers.GroupResponse {
-	var response = enforcers.GroupResponse{}
+	var response enforcers.GroupResponse
 	data, err := json.Marshal(group)
 	if err != nil {
 		log.Println(err)
@@ -20,7 +20,7 @@ func (cli *Client) CreateEnforcerGroup(group enforcers.Group) enforcers.GroupRes
 	apiPath := "/api/v1/hostsbatch"
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
-	resp, body, errs := request.Clone().Post(cli.url+apiPath).Send(string(data)).End()
+	resp, body, errs := request.Clone().Post(cli.url + apiPath).Send(string(data)).End()
 	if errs != nil {
 		log.Println(resp.StatusCode)
 	}

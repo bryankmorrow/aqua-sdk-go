@@ -10,13 +10,12 @@ import (
 // GetHosts /api/v1/hosts?hosts=
 // hosts options are connected and disconnected
 func (cli *Client) GetHosts(paramsString map[string]string) infrastructure.Hosts {
-	var response = infrastructure.Hosts{}
+	var response infrastructure.Hosts
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/hosts"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).Query(paramString).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

@@ -9,14 +9,13 @@ import (
 // GetAssuranceScripts - retrieves user created assurance scripts
 // Params:  search, order_by (name|num_users), engine (ab|sh|yaml), type (), name, id
 // Returns: Struct from types/assurance/scripts
-func (cli *Client) GetAssuranceScripts(paramsString  map[string]string) assurance.Scripts {
-	var response = assurance.Scripts{}
+func (cli *Client) GetAssuranceScripts(paramsString map[string]string) assurance.Scripts {
+	var response assurance.Scripts
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/image_assurance/user_scripts"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).Query(paramString).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

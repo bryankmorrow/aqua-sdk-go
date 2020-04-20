@@ -20,7 +20,7 @@ func (cli *Client) GetVulnerabilities(registry, repo, tag string, page, pagesize
 	if pagesize == 0 {
 		pagesize = 1000
 	}
-	var response = images.Vulnerabilities{}
+	var response images.Vulnerabilities
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/vulnerabilities", registry, repo, tag)
@@ -28,7 +28,6 @@ func (cli *Client) GetVulnerabilities(registry, repo, tag string, page, pagesize
 	paramBool := cli.GetBoolParams(paramsBool)
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).Query(paramBool).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

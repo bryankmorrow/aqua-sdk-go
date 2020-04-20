@@ -23,13 +23,12 @@ func (cli *Client) GetRisksAcknowledge(paramsString map[string]string) (risks.Ac
 		paramsString["page_size"] = "1000"
 		pagesize = 1000
 	}
-	var response = risks.Acknowledgements{}
+	var response risks.Acknowledgements
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks/acknowledge"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).Query(paramString).End()
-	//log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

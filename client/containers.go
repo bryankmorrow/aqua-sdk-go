@@ -18,14 +18,13 @@ func (cli *Client) GetContainers(page, pagesize int, paramsString map[string]str
 	if pagesize == 0 {
 		pagesize = 1000
 	}
-	var response = containers.Containers{}
+	var response containers.Containers
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/containers"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

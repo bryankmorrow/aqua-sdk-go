@@ -13,12 +13,11 @@ import (
 // path parameters are containers,images,vulnerabilities
 // response is Trends struct
 func (cli *Client) GetTrends(trend string) dashboard.Trends {
-	var response = dashboard.Trends{}
+	var response dashboard.Trends
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/dashboard/%s/trends", trend)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

@@ -12,12 +12,11 @@ import (
 // Path v2/infrastructure/<type>/<name> (type can be cluster or node
 // Return - infrastructure.Detail response struct
 func (cli *Client) GetDetailName(infraType, name string) infrastructure.Detail {
-	var response = infrastructure.Detail{}
+	var response infrastructure.Detail
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/infrastructure/%s/%s", infraType, name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}
@@ -41,7 +40,6 @@ func (cli *Client) GetDetailID(ID string) infrastructure.Detail {
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/infrastructure/%s", ID)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

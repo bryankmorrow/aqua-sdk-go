@@ -14,13 +14,12 @@ import (
 // containers_app refers to Aqua Services
 // response is Overview struct
 func (cli *Client) GetOverview(paramsString map[string]string) dashboard.Overview {
-	var response = dashboard.Overview{}
+	var response dashboard.Overview
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/dashboard"
 	paramString := cli.GetStringParams(paramsString)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).Query(paramString).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

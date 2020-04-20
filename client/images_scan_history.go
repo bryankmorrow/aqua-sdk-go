@@ -15,12 +15,11 @@ import (
 // Returns response struct
 // v2/images/{registry}/{repo}/{tag}/scan_history
 func (cli *Client) GetScanHistory(registry, repo, tag string) (images.ScanHistory, error) {
-	var response = images.ScanHistory{}
+	var response images.ScanHistory
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/scan_history", registry, repo, tag)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

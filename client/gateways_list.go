@@ -7,14 +7,13 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-// GetGateways retrives the list of gateways
+// GetGateways retrieves the list of gateways
 func (cli *Client) GetGateways() gateways.Gateways {
-	var response = gateways.Gateways{}
+	var response gateways.Gateways
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/servers"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
-	log.Printf("Calling %s%s", cli.url, apiPath)
 	if errs != nil {
 		log.Println(events.StatusCode)
 	}

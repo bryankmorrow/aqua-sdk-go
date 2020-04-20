@@ -29,7 +29,7 @@ func (cli *Client) GetVulnerabilities(registry, repo, tag string, page, pagesize
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("page", strconv.Itoa(page)).Param("pagesize", strconv.Itoa(pagesize)).
 		Query(paramString).Query(paramBool).End()
 	if errs != nil {
-		log.Println(events.StatusCode)
+		log.Println(errs)
 	}
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)

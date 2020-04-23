@@ -3,28 +3,11 @@ package main
 import (
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/client"
+	"github.com/BryanKMorrow/aqua-sdk-go/types/images"
 	"log"
 	"os"
 	"sort"
-	"time"
 )
-
-type ImageHistory struct {
-	Name     string            `json:"name"`
-	Registry string            `json:"registry"`
-	Tag      []ImageHistoryTag `json:"image_history_tag"`
-}
-
-type ImageHistoryTag struct {
-	Tag        string    `json:"tag"`
-	Created    time.Time `json:"created"`
-	VulnsFound int       `json:"vulns_found"`
-	CritVulns  int       `json:"crit_vulns"`
-	HighVulns  int       `json:"high_vulns"`
-	MedVulns   int       `json:"med_vulns"`
-	LowVulns   int       `json:"low_vulns"`
-	NegVulns   int       `json:"neg_vulns"`
-}
 
 func main() {
 	// Get the Aqua CSP connection parameters from Environment Variables
@@ -40,22 +23,21 @@ func main() {
 	} else {
 
 		params := make(map[string]string)
-		params["registry"] = "Docker Hub"
-		params["repository"] = "httpd"
+		params["registry"] = "registry"
+		params["repository"] = "repository"
 		params["fix_availability"] = "true"
-		img := ImageHistory{
+		img := images.History{
 			Name:     params["repository"],
 			Registry: params["registry"],
 		}
-		var iht []ImageHistoryTag
-		images, _, _, _ := cli.GetAllImages(0, 0, params, nil)
-		for _, image := range images.Result {
+		var tl []images.Tag
+		il, _, _, _ := cli.GetAllImages(0, 0, params, nil)
+		for _, image := range il.Result {
 			//log.Printf("Image: %s  Created: %v  Total: %d  Critical: %d  High: %d  Medium: %d  Low: %d", vuln.Name, vuln.Created, vuln.VulnsFound, vuln.CritVulns, vuln.HighVulns, vuln.MedVulns, vuln.LowVulns)
+
 			i, err := cli.GetImage(image.Registry, image.Repository, image.Tag)
-			if err != nil {
-				log.Println(err)
-			} else {
-				tag := ImageHistoryTag{
+			if err == nil {
+				tag := images.Tag{
 					Tag:        i.Tag,
 					Created:    i.Metadata.Created,
 					VulnsFound: i.VulnsFound,
@@ -65,15 +47,15 @@ func main() {
 					LowVulns:   i.LowVulns,
 					NegVulns:   i.NegVulns,
 				}
-				iht = append(iht, tag)
+				tl = append(tl, tag)
 				//log.Printf("Image %s created on: %v", i.Name, i.Metadata.Created)
 				//log.Printf("Total: %d  Critical: %d  High: %d  Medium: %d  Low: %d", i.VulnsFound, i.CritVulns, i.HighVulns, i.MedVulns, i.LowVulns)
 			}
 		}
-		sort.Slice(iht, func(i, j int) bool {
-			return iht[i].Created.Before(iht[j].Created)
+		sort.Slice(tl, func(i, j int) bool {
+			return tl[i].Created.Before(tl[j].Created)
 		})
-		img.Tag = iht
+		img.Tags = tl
 		data, _ := json.Marshal(img)
 		log.Println(string(data))
 	}

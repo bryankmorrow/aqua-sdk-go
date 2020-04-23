@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/BryanKMorrow/aqua-sdk-go/types/images"
 	"github.com/parnurzeal/gorequest"
@@ -26,8 +27,12 @@ func (cli *Client) GetImage(registry, repo, tag string) (images.Image, error) {
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetAllImages from %s%s, %v ", cli.url, apiPath, err.Error())
-			//json: Unmarshal(non-pointer main.Request)
+			log.Printf("Error calling func GetImage from %s%s, %v ", cli.url, apiPath, err)
+			if terr, ok := err.(*time.ParseError); ok {
+				fmt.Println("Error when trying to read 'metadata.created' value", terr)
+				log.Println("Setting the metadata.created to current timestamp to bypass this error")
+				response.Metadata.Created = time.Now()
+			}
 		}
 	} else {
 		return response, errors.New("image not found")

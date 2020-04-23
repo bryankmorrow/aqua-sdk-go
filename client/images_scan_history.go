@@ -14,8 +14,8 @@ import (
 // Path parameters of {registry}, {repo} and {tag}
 // Returns response struct
 // v2/images/{registry}/{repo}/{tag}/scan_history
-func (cli *Client) GetScanHistory(registry, repo, tag string) (images.ScanHistory, error) {
-	var response images.ScanHistory
+func (cli *Client) GetScanHistory(registry, repo, tag string) (images.ScanHistories, error) {
+	var response images.ScanHistories
 	request := gorequest.New()
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/scan_history", registry, repo, tag)

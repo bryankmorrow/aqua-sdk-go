@@ -31,7 +31,7 @@ func (cli *Client) GetContainers(page, pagesize int, paramsString map[string]str
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetAllImages from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetAllImages from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}

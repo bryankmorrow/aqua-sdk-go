@@ -26,7 +26,7 @@ func (cli *Client) GetOverview(paramsString map[string]string) dashboard.Overvie
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetOverview from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetOverview from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}

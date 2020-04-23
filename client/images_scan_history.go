@@ -26,8 +26,7 @@ func (cli *Client) GetScanHistory(registry, repo, tag string) (images.ScanHistor
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetScanHistory from %s%s, %v ", cli.url, apiPath, err.Error())
-			//json: Unmarshal(non-pointer main.Request)
+			log.Printf("Error calling func GetScanHistory from %s%s, %v ", cli.url, apiPath, err)
 		}
 	} else {
 		return response, errors.New("image not found")

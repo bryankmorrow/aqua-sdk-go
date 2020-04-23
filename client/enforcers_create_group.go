@@ -27,7 +27,7 @@ func (cli *Client) CreateEnforcerGroup(group enforcers.Group) enforcers.GroupRes
 	if resp.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func CreateEnforcerGroup from %s, %v ", cli.url, err.Error())
+			log.Printf("Error calling func CreateEnforcerGroup from %s, %v ", cli.url, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	} else {

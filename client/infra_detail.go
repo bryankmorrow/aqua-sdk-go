@@ -23,7 +23,7 @@ func (cli *Client) GetDetailName(infraType, name string) infrastructure.Detail {
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetDetailName from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetDetailName from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}
@@ -46,7 +46,7 @@ func (cli *Client) GetDetailID(ID string) infrastructure.Detail {
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetDetailID from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetDetailID from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}

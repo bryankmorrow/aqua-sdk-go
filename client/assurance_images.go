@@ -21,7 +21,7 @@ func (cli *Client) GetImageAssurance() assurance.Images {
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetImageAssurance from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetImageAssurance from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}

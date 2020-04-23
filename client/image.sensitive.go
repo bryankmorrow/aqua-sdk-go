@@ -25,7 +25,7 @@ func (cli *Client) GetSensitive(registry, repo, tag string) images.Sensitive {
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
-			log.Printf("Error calling func GetSensitive from %s%s, %v ", cli.url, apiPath, err.Error())
+			log.Printf("Error calling func GetSensitive from %s%s, %v ", cli.url, apiPath, err)
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}

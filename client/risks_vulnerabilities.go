@@ -11,7 +11,7 @@ import (
 // GetRiskVulnerabilities - retrieves all at risk vulnerabilities
 // Returns Repository struct
 // Path - api/v2/repositories
-func (cli *Client) GetRiskVulnerabilities(page, pagesize int, paramsString map[string]string) risks.Vulnerabilities {
+func (cli *Client) GetRiskVulnerabilities(page, pagesize int, paramsString map[string]string) (risks.Vulnerabilities, int, int, int) {
 	// set the default pagesize
 	if pagesize == 0 {
 		pagesize = 1000
@@ -33,6 +33,8 @@ func (cli *Client) GetRiskVulnerabilities(page, pagesize int, paramsString map[s
 			//json: Unmarshal(non-pointer main.Request)
 		}
 	}
-
-	return response
+	remaining := cli.CalcRemaining(pagesize, page, response.Count)
+	page = response.Page + 1
+	remaining, next := cli.CalcNext(remaining, page)
+	return response, remaining, next, response.Count
 }

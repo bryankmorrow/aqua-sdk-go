@@ -25,7 +25,7 @@ func main() {
 		params["hide_base_image"] = "false"
 		params["fix_availability"] = "true"
 		params["order_by"] = "-image"
-		detail := cli.GetRiskVulnerabilities(1, 50, params)
+		detail, _, _, _ := cli.GetRiskVulnerabilities(1, 50, params)
 		log.Println(detail.Count)
 	}
 }

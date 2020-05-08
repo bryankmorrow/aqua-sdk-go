@@ -11,7 +11,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-// GetVulnerabilities - retrieves all vulnerabilties from a particular image
+// GetVulnerabilities - retrieves all vulnerabilities from a particular image
 // Accepts the registry, repo and tag strings as well as the page number, pagesize and params map
 // Returns response struct, remaining count and next page
 // v2/images

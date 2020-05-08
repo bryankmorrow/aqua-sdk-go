@@ -13,18 +13,9 @@ type Vulnerabilities struct {
 type Vulnerability struct {
 	Registry                  string      `json:"registry"`
 	ImageRepositoryName       string      `json:"image_repository_name"`
+	ImageName                 string      `json:"image_name"`
 	ReferencedVulnerabilities interface{} `json:"referenced_vulnerabilities"`
-	Resource                  struct {
-		Type     string   `json:"type"`
-		Format   string   `json:"format"`
-		Path     string   `json:"path"`
-		Name     string   `json:"name"`
-		Version  string   `json:"version"`
-		Arch     string   `json:"arch"`
-		Cpe      string   `json:"cpe"`
-		Licenses []string `json:"licenses"`
-		Hash     string   `json:"hash"`
-	} `json:"resource"`
+	Resource                  Resource    `json:"resource"`
 	Name                      string      `json:"name"`
 	Description               string      `json:"description"`
 	PublishDate               string      `json:"publish_date"`
@@ -72,4 +63,16 @@ type Vulnerability struct {
 	ImageWorkloadInfo         interface{} `json:"image_workload_info"`
 	BaseImageVulnerability    bool        `json:"base_image_vulnerability"`
 	BaseImageName             string      `json:"base_image_name"`
+}
+
+type Resource struct {
+	Type     string   `json:"type"`
+	Format   string   `json:"format"`
+	Path     string   `json:"path"`
+	Name     string   `json:"name"`
+	Version  string   `json:"version"`
+	Arch     string   `json:"arch,omitempty"`
+	Cpe      string   `json:"cpe"`
+	Licenses []string `json:"licenses,omitempty"`
+	Hash     string   `json:"hash,omitempty"`
 }

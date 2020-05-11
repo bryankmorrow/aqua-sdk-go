@@ -22,6 +22,9 @@ func main() {
 		params := make(map[string]string)
 		params["registry"] = "Docker Hub"
 		params["fix_availability"] = "true"
-		_, _, _, _ = cli.GetAllImages(0, 0, params, nil)
+		detail, _, _, _ := cli.GetAllImages(0, 10, params, nil)
+		for _, i := range detail.Result {
+			log.Println(i)
+		}
 	}
 }

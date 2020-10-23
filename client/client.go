@@ -42,11 +42,13 @@ func NewClient(url, user, password string) *Client {
 // GetAuthToken - Connect to Aqua and return a JWT bearerToken (string)
 // Return: bool - successfully connected?
 func (cli *Client) GetAuthToken() bool {
+	log.Printf("[DEBUG]  %T\n", cli)
+	log.Println("[DEBUG]  cli: ", cli)
 	var connected bool
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	resp, body, err := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
 		Send(`{"id":"` + cli.user + `", "password":"` + cli.password + `"}`).End()
-
+	log.Println("[DEBUG]  response: ", resp)
 	if err != nil {
 		log.Printf("Failed connecting to Aqua cli: %s \n  Status Code: %d", cli.url, resp.StatusCode)
 		connected = false

@@ -86,3 +86,16 @@ func (cli *Client) CreateUser(user User) error {
 	}
 	return nil
 }
+
+// UpdateUser updates an existing user
+func (cli *Client) UpdateUser(name string) (*User, error) {
+	res := &User{}
+
+	return res, nil
+}
+
+// DeleteUser
+func (cli *Client) DeleteUser(name string) error {
+
+	return nil
+}

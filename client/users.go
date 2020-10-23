@@ -4,17 +4,27 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/BryanKMorrow/aqua-sdk-go/types/users"
 	"github.com/parnurzeal/gorequest"
 	"github.com/pkg/errors"
 	"log"
 )
 
+// User represents a local Aqua user
+type User struct {
+	ID              string   `json:"id"` // Username
+	Password        string   `json:"password,omitempty"`
+	PasswordConfirm string   `json:"passwordConfirm,omitempty"`
+	Roles           []string `json:"roles,omitempty"`
+	Name            string   `json:"name,omitempty"` // Display Name
+	Email           string   `json:"email,omitempty"`
+	FirstTime       bool     `json:"first_time,omitempty"`
+}
+
 // GetUser - returns single Aqua user
 // Params: name: The name of user
-func (cli *Client) GetUser(name string) (users.User, error) {
+func (cli *Client) GetUser(name string) (User, error) {
 	var err error
-	var response users.User
+	var response User
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users/%s", name)
@@ -36,9 +46,9 @@ func (cli *Client) GetUser(name string) (users.User, error) {
 }
 
 // GetUsers - returns all Aqua users
-func (cli *Client) GetUsers() ([]users.User, error) {
+func (cli *Client) GetUsers() ([]User, error) {
 	var err error
-	var response []users.User
+	var response []User
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users")
@@ -59,7 +69,7 @@ func (cli *Client) GetUsers() ([]users.User, error) {
 // CreateUser - creates single Aqua user
 // Params: name: The name of the Image Assurance Policy
 // Returns: The struct from types/users/user
-func (cli *Client) CreateUser(user users.User) error {
+func (cli *Client) CreateUser(user User) error {
 	payload, err := json.Marshal(user)
 	if err != nil {
 		return err

@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/BryanKMorrow/aqua-sdk-go/client"
-	"github.com/BryanKMorrow/aqua-sdk-go/types/users"
 	"log"
 	"os"
 )
@@ -19,7 +18,7 @@ func main() {
 	if !connected {
 		log.Fatalln("Failed to retrieve JWT Authorization Token")
 	} else {
-		user := users.User{
+		user := client.User{
 			ID:        "aqua-go-sdk",
 			Password:  "P@ssword01",
 			Roles:     []string{"Scanner"},

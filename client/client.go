@@ -8,6 +8,7 @@ Usage
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"log"
 

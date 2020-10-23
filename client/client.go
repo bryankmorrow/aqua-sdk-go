@@ -10,8 +10,6 @@ package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import (
 	"crypto/tls"
 	"encoding/json"
-	"fmt"
-	"github.com/pkg/errors"
 	"log"
 
 	"github.com/parnurzeal/gorequest"
@@ -43,14 +41,14 @@ func NewClient(url, user, password string) *Client {
 
 // GetAuthToken - Connect to Aqua and return a JWT bearerToken (string)
 // Return: bool - successfully connected?
-func (cli *Client) GetAuthToken() (bool, error) {
+func (cli *Client) GetAuthToken() bool {
 	var connected bool
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	resp, body, err := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
 		Send(`{"id":"` + cli.user + `", "password":"` + cli.password + `"}`).End()
 	if err != nil {
 		connected = false
-		return connected, errors.New("Failed connecting to Aqua API")
+		return connected
 	}
 
 	if resp.StatusCode == 200 {
@@ -60,7 +58,7 @@ func (cli *Client) GetAuthToken() (bool, error) {
 		connected = true
 	} else {
 		log.Printf("Failed with status: %s", resp.Status)
-		return false, errors.New(fmt.Sprintf("Failed connecting to Aqua cli: %s \n  Status Code: %d", cli.url, resp.StatusCode))
+		connected = false
 	}
-	return connected, nil
+	return connected
 }

@@ -14,10 +14,7 @@ func main() {
 
 	// Create the client and get the JWT token for API call authorization
 	cli := client.NewClient(url, user, password)
-	connected, err := cli.GetAuthToken()
-	if err != nil {
-		log.Println(err)
-	}
+	connected := cli.GetAuthToken()
 	if !connected {
 		log.Fatalln("Failed to retrieve JWT Authorization Token")
 	} else {

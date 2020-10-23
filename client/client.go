@@ -43,11 +43,13 @@ func NewClient(url, user, password string) *Client {
 func (cli *Client) GetAuthToken() bool {
 	var connected bool
 	request := gorequest.New()
-	resp, body, errs := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
+	resp, body, err := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
 		Send(`{"id":"` + cli.user + `", "password":"` + cli.password + `"}`).End()
 
-	if errs != nil {
+	if err != nil {
 		log.Printf("Failed connecting to Aqua cli: %s \n  Status Code: %d", cli.url, resp.StatusCode)
+		connected = false
+		return connected
 	}
 
 	if resp.StatusCode == 200 {

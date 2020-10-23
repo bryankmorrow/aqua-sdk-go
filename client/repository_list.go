@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/images"
 	"github.com/parnurzeal/gorequest"
@@ -18,6 +19,7 @@ func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]s
 	}
 	var response images.Repositories
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/repositories"
 	paramString := cli.GetStringParams(paramsString)

@@ -1,9 +1,9 @@
 package main
 
 import (
-"github.com/BryanKMorrow/aqua-sdk-go/client"
-"log"
-"os"
+	"github.com/BryanKMorrow/aqua-sdk-go/client"
+	"log"
+	"os"
 )
 
 func main() {

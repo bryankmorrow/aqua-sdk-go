@@ -1,5 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
+
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
 	"github.com/parnurzeal/gorequest"

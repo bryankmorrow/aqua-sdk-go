@@ -1,5 +1,6 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/registry"
 	"github.com/parnurzeal/gorequest"
@@ -12,6 +13,7 @@ import (
 func (cli *Client) GetRegistries() registry.Registry {
 	var response registry.Registry
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/registries"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/risks"
 	"github.com/parnurzeal/gorequest"
@@ -25,6 +26,7 @@ func (cli *Client) GetRisksAcknowledge(paramsString map[string]string) (risks.Ac
 	}
 	var response risks.Acknowledgements
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks/acknowledge"
 	paramString := cli.GetStringParams(paramsString)

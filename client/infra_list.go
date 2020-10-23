@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
 	"github.com/parnurzeal/gorequest"
@@ -19,6 +20,7 @@ func (cli *Client) GetInfrastructure(page, pagesize int, paramsString map[string
 	}
 	var response infrastructure.List
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/infrastructure"
 	paramString := cli.GetStringParams(paramsString)

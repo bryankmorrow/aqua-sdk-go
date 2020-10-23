@@ -96,5 +96,3 @@ type GroupResponse struct {
 	PasDeploymentLink         string `json:"pas_deployment_link"`
 	AquaVersion               string `json:"aqua_version"`
 }
-
-

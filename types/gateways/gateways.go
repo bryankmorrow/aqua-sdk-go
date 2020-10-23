@@ -72,4 +72,3 @@ type Gateways []struct {
 	ContainerID               string      `json:"container_id"`
 	Secrets                   interface{} `json:"secrets"`
 }
-

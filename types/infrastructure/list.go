@@ -1,4 +1,4 @@
-package infrastructure  // import "github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
+package infrastructure // import "github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
 
 import "time"
 
@@ -95,8 +95,8 @@ type List struct {
 			Malware      int `json:"malware"`
 			LastVulnScan int `json:"last_vuln_scan"`
 		} `json:"security_issues"`
-		IsEnforced             bool      `json:"is_enforced"`
-		CreatedDate            time.Time `json:"created_date"`
+		IsEnforced  bool      `json:"is_enforced"`
+		CreatedDate time.Time `json:"created_date"`
 	} `json:"result"`
 	Query struct {
 		IdentifiersOnly bool   `json:"identifiers_only"`

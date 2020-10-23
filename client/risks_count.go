@@ -1,5 +1,6 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/risks"
 	"github.com/parnurzeal/gorequest"
@@ -12,6 +13,7 @@ import (
 func (cli *Client) GetRiskCount() risks.Counts {
 	var response risks.Counts
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

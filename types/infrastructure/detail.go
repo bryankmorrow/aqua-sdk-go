@@ -1,4 +1,4 @@
-package infrastructure  // import "github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
+package infrastructure // import "github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
 
 import "time"
 

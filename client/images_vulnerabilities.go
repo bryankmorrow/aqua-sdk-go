@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -22,6 +23,7 @@ func (cli *Client) GetVulnerabilities(registry, repo, tag string, page, pagesize
 	}
 	var response images.Vulnerabilities
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/vulnerabilities", registry, repo, tag)
 	paramString := cli.GetStringParams(paramsString)

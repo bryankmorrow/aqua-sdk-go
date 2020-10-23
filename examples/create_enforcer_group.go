@@ -41,7 +41,7 @@ func main() {
 			ImageAssurance:              true,
 			Logicalname:                 "aqua-sdk-go",
 			NetworkProtection:           true,
-			Orchestrator:  				 orchestrator,
+			Orchestrator:                orchestrator,
 			RuntimeType:                 "docker", // docker, crio, containerd
 			SyncHostImages:              true,
 			SyscallEnabled:              false,

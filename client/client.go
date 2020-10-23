@@ -49,9 +49,8 @@ func (cli *Client) GetAuthToken() (bool, error) {
 	resp, body, err := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
 		Send(`{"id":"` + cli.user + `", "password":"` + cli.password + `"}`).End()
 	if err != nil {
-		log.Printf("Failed connecting to Aqua cli: %s \n  Status Code: %d", cli.url, resp.StatusCode)
 		connected = false
-		return connected, errors.New(fmt.Sprintf("Failed connecting to Aqua cli: %s \n  Status Code: %d", cli.url, resp.StatusCode))
+		return connected, errors.New("Failed connecting to Aqua API")
 	}
 
 	if resp.StatusCode == 200 {

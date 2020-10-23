@@ -10,7 +10,7 @@ import (
 // GetGateways retrieves the list of gateways
 func (cli *Client) GetGateways() gateways.Gateways {
 	var response gateways.Gateways
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/servers"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

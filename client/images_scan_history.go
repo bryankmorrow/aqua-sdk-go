@@ -16,7 +16,7 @@ import (
 // v2/images/{registry}/{repo}/{tag}/scan_history
 func (cli *Client) GetScanHistory(registry, repo, tag string) (images.ScanHistories, error) {
 	var response images.ScanHistories
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/scan_history", registry, repo, tag)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

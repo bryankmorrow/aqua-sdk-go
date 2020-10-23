@@ -13,7 +13,7 @@ import (
 // Return - infrastructure.Detail response struct
 func (cli *Client) GetDetailName(infraType, name string) infrastructure.Detail {
 	var response infrastructure.Detail
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/infrastructure/%s/%s", infraType, name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
@@ -36,7 +36,7 @@ func (cli *Client) GetDetailName(infraType, name string) infrastructure.Detail {
 // NOTE - may only work for Nodes, not Clusters??
 func (cli *Client) GetDetailID(ID string) infrastructure.Detail {
 	var response = infrastructure.Detail{}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/infrastructure/%s", ID)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

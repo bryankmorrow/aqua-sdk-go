@@ -11,7 +11,7 @@ import (
 // Returns: Struct from types/assurance/policies
 func (cli *Client) GetAssurancePolicies(paramsString map[string]string) assurance.Policies {
 	var response assurance.Policies
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/assurance_policy"
 	paramString := cli.GetStringParams(paramsString)

@@ -14,7 +14,7 @@ import (
 // response is Trends struct
 func (cli *Client) GetTrends(trend string) dashboard.Trends {
 	var response dashboard.Trends
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/dashboard/%s/trends", trend)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

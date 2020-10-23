@@ -14,7 +14,7 @@ import (
 // v1/containers/{id}/{host_id}/inspect
 func (cli *Client) InspectContainer(ID, hostID string) containers.Inspect {
 	var response containers.Inspect
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/containers/%s/%s/inspect", ID, hostID)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

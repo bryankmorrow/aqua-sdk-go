@@ -18,7 +18,7 @@ func (cli *Client) CreateEnforcerGroup(group enforcers.Group) enforcers.GroupRes
 		log.Println(err)
 	}
 	apiPath := "/api/v1/hostsbatch"
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	resp, body, errs := request.Clone().Post(cli.url + apiPath).Send(string(data)).End()
 	if errs != nil {

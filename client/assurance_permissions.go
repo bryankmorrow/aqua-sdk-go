@@ -11,7 +11,7 @@ import (
 // Returns: Struct from types/assurance/permission-list
 func (cli *Client) GetImagePermissions() assurance.PermissionList {
 	var response assurance.PermissionList
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/image_assurance/image_permissions"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

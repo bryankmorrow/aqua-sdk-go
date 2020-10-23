@@ -15,7 +15,7 @@ import (
 // v2/images/registry/repo/tag/sensitive
 func (cli *Client) GetSensitive(registry, repo, tag string) images.Sensitive {
 	var response images.Sensitive
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/sensitive", registry, repo, tag)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -15,7 +16,7 @@ import (
 func (cli *Client) GetImageAssuranceName(name string) (assurance.Image, error) {
 	var err error
 	var response assurance.Image
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/image_assurance/%s", name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
@@ -98,7 +99,7 @@ func (cli *Client) CreateImageAssurance(policy assurance.Image) string {
 	if err != nil {
 		log.Println(err)
 	}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/image_assurance")
 	resp, _, errs := request.Clone().Post(cli.url + apiPath).Send(string(payload)).End()

@@ -21,7 +21,7 @@ func (cli *Client) GetVulnerabilities(registry, repo, tag string, page, pagesize
 		pagesize = 1000
 	}
 	var response images.Vulnerabilities
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/vulnerabilities", registry, repo, tag)
 	paramString := cli.GetStringParams(paramsString)

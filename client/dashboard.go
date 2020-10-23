@@ -15,7 +15,7 @@ import (
 // response is Overview struct
 func (cli *Client) GetOverview(paramsString map[string]string) dashboard.Overview {
 	var response dashboard.Overview
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/dashboard"
 	paramString := cli.GetStringParams(paramsString)

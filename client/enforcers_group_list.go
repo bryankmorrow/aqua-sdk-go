@@ -12,7 +12,7 @@ import (
 // Returns a slice of enforcers.GroupResponse
 func (cli *Client) GetEnforcerGroups() []enforcers.GroupResponse {
 	var response []enforcers.GroupResponse
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/hostsbatch"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

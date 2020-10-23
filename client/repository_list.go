@@ -17,7 +17,7 @@ func (cli *Client) GetRepositories(page, pagesize int, paramsString map[string]s
 		pagesize = 1000
 	}
 	var response images.Repositories
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/repositories"
 	paramString := cli.GetStringParams(paramsString)

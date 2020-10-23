@@ -18,7 +18,7 @@ func (cli *Client) GetInfrastructure(page, pagesize int, paramsString map[string
 		pagesize = 1000
 	}
 	var response infrastructure.List
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/infrastructure"
 	paramString := cli.GetStringParams(paramsString)

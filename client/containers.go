@@ -19,7 +19,7 @@ func (cli *Client) GetContainers(page, pagesize int, paramsString map[string]str
 		pagesize = 1000
 	}
 	var response containers.Containers
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/containers"
 	paramString := cli.GetStringParams(paramsString)

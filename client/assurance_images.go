@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/assurance"
 	"github.com/parnurzeal/gorequest"
@@ -11,7 +12,7 @@ import (
 // Returns: Struct from types/assurance/images
 func (cli *Client) GetImageAssurance() assurance.Images {
 	var response assurance.Images
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/image_assurance"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

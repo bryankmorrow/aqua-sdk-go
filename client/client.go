@@ -42,7 +42,7 @@ func NewClient(url, user, password string) *Client {
 // Return: bool - successfully connected?
 func (cli *Client) GetAuthToken() bool {
 	var connected bool
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	resp, body, err := request.Post(cli.url+"/api/v1/login").Param("abilities", "1").
 		Send(`{"id":"` + cli.user + `", "password":"` + cli.password + `"}`).End()
 

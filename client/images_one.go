@@ -17,7 +17,7 @@ import (
 // v2/images/registry/repo/tag
 func (cli *Client) GetImage(registry, repo, tag string) (images.Image, error) {
 	var response images.Image
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s", registry, repo, tag)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

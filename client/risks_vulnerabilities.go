@@ -17,7 +17,7 @@ func (cli *Client) GetRiskVulnerabilities(page, pagesize int, paramsString map[s
 		pagesize = 1000
 	}
 	var response risks.Vulnerabilities
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks/vulnerabilities"
 	paramString := cli.GetStringParams(paramsString)

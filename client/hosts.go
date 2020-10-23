@@ -1,6 +1,7 @@
 package client // import "github.com/BryanKMorrow/aqua-sdk-go/client"
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/infrastructure"
 	"github.com/parnurzeal/gorequest"
@@ -11,7 +12,7 @@ import (
 // hosts options are connected and disconnected
 func (cli *Client) GetHosts(paramsString map[string]string) infrastructure.Hosts {
 	var response infrastructure.Hosts
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/hosts"
 	paramString := cli.GetStringParams(paramsString)

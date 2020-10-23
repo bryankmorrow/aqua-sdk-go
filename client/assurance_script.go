@@ -14,7 +14,7 @@ import (
 // Returns: Struct from types/assurance/script
 func (cli *Client) GetAssuranceScriptID(ID string) assurance.Script {
 	var response assurance.Script
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/image_assurance/user_scripts/%s", ID)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

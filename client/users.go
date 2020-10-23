@@ -1,6 +1,7 @@
 package client
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/BryanKMorrow/aqua-sdk-go/types/users"
@@ -14,7 +15,7 @@ import (
 func (cli *Client) GetUser(name string) (users.User, error) {
 	var err error
 	var response users.User
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users/%s", name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
@@ -38,7 +39,7 @@ func (cli *Client) GetUser(name string) (users.User, error) {
 func (cli *Client) GetUsers() ([]users.User, error) {
 	var err error
 	var response []users.User
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users")
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
@@ -63,7 +64,7 @@ func (cli *Client) CreateUser(user users.User) error {
 	if err != nil {
 		return err
 	}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users")
 	resp, _, errs := request.Clone().Post(cli.url + apiPath).Send(string(payload)).End()

@@ -11,7 +11,7 @@ import (
 // Path - v2/risks
 func (cli *Client) GetRiskCount() risks.Counts {
 	var response risks.Counts
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

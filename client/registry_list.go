@@ -11,7 +11,7 @@ import (
 // Path - v1/registries
 func (cli *Client) GetRegistries() registry.Registry {
 	var response registry.Registry
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v1/registries"
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()

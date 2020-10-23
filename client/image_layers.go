@@ -20,7 +20,7 @@ func (cli *Client) GetLayers(registry, repo, tag string, page, pagesize int, par
 		pagesize = 1000
 	}
 	var response images.Layers
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/images/%s/%s/%s/history_layers", registry, repo, tag)
 	paramString := cli.GetStringParams(paramsString)

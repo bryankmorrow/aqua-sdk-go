@@ -24,7 +24,7 @@ func (cli *Client) GetRisksAcknowledge(paramsString map[string]string) (risks.Ac
 		pagesize = 1000
 	}
 	var response risks.Acknowledgements
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := "/api/v2/risks/acknowledge"
 	paramString := cli.GetStringParams(paramsString)

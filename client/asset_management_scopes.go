@@ -1,6 +1,7 @@
 package client
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/parnurzeal/gorequest"
@@ -59,12 +60,12 @@ type ApplicationScope struct {
 // ReadApplicationScope retrieves an application scope from the Aqua Enterprise API
 func (cli *Client) ReadApplicationScope(name string) (*ApplicationScope, error) {
 	as := &ApplicationScope{}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/access_management/scopes/%s", name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	if errs != nil {
-		log.Println("[DEBUG]  failed to get application scopes: ", events.StatusCode)
+		log.Println("failed to get application scopes: ", events.StatusCode)
 	}
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), as)
@@ -81,7 +82,7 @@ func (cli *Client) CreateApplicationScope(scope *ApplicationScope) error {
 	if err != nil {
 		return err
 	}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/access_management/scopes")
 	resp, _, errs := request.Clone().Post(cli.url + apiPath).Send(string(payload)).End()

@@ -96,7 +96,6 @@ func (cli *Client) UpdateUser(name string) (*User, error) {
 
 // DeleteUser
 func (cli *Client) DeleteUser(name string) error {
-	var response User
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v1/users/%s", name)
@@ -106,9 +105,6 @@ func (cli *Client) DeleteUser(name string) error {
 	}
 	if events.StatusCode != 204 {
 		return fmt.Errorf("failed deleting user, status code: %v", events.StatusCode)
-	}
-	if response.Name == "" {
-		return fmt.Errorf("user not found: %s", name)
 	}
 	return nil
 }

@@ -20,6 +20,12 @@ type User struct {
 	FirstTime       bool     `json:"first_time,omitempty"`
 }
 
+// NewPassword represents a password change
+type NewPassword struct {
+	Name     string `json:"name"`
+	Password string `json:"new_password"`
+}
+
 // GetUser - returns single Aqua user
 // Params: name: The name of user
 func (cli *Client) GetUser(name string) (User, error) {
@@ -88,13 +94,25 @@ func (cli *Client) CreateUser(user User) error {
 }
 
 // UpdateUser updates an existing user
-func (cli *Client) UpdateUser(name string) (*User, error) {
-	res := &User{}
-
-	return res, nil
+func (cli *Client) UpdateUser(user User) error {
+	payload, err := json.Marshal(user)
+	if err != nil {
+		return err
+	}
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	request.Set("Authorization", "Bearer "+cli.token)
+	apiPath := fmt.Sprintf("/api/v1/users/%s", user.ID)
+	resp, _, errs := request.Clone().Put(cli.url + apiPath).Send(string(payload)).End()
+	if errs != nil {
+		return errors.Wrap(err, "failed modifying user")
+	}
+	if resp.StatusCode != 201 || resp.StatusCode != 204 {
+		return err
+	}
+	return nil
 }
 
-// DeleteUser
+// DeleteUser removes a user
 func (cli *Client) DeleteUser(name string) error {
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
@@ -105,6 +123,25 @@ func (cli *Client) DeleteUser(name string) error {
 	}
 	if events.StatusCode != 204 {
 		return fmt.Errorf("failed deleting user, status code: %v", events.StatusCode)
+	}
+	return nil
+}
+
+// ChangePassword modifies the user's password
+func (cli *Client) ChangePassword(password NewPassword) error {
+	payload, err := json.Marshal(password)
+	if err != nil {
+		return err
+	}
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	request.Set("Authorization", "Bearer "+cli.token)
+	apiPath := fmt.Sprintf("/api/v1/users/%s/password", password.Name)
+	resp, _, errs := request.Clone().Put(cli.url + apiPath).Send(string(payload)).End()
+	if errs != nil {
+		return fmt.Errorf("error while calling PUT on /api/v1/users/%s/password: %v", password.Name, resp.StatusCode)
+	}
+	if resp.StatusCode != 204 {
+		return fmt.Errorf("failed changing user password , status code: %v", resp.StatusCode)
 	}
 	return nil
 }

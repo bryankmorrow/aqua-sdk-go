@@ -122,14 +122,35 @@ func (cli *Client) CreateApplicationScope(scope *ApplicationScope) error {
 }
 
 // UpdateApplicationScope updates an existing application scope in Aqua Enterprise API
-func (cli *Client) UpdateApplicationScope(name string, req ApplicationScope) (*ApplicationScope, error) {
-	res := &ApplicationScope{}
-
-	return res, nil
+func (cli *Client) UpdateApplicationScope(as ApplicationScope) error {
+	payload, err := json.Marshal(as)
+	if err != nil {
+		return err
+	}
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	request.Set("Authorization", "Bearer "+cli.token)
+	apiPath := fmt.Sprintf("/api/v2/access_management/scopes/%s", as.Name)
+	resp, _, errs := request.Clone().Put(cli.url + apiPath).Send(string(payload)).End()
+	if errs != nil {
+		return errors.Wrap(err, "failed modifying application scope")
+	}
+	if resp.StatusCode != 201 || resp.StatusCode != 204 {
+		return err
+	}
+	return nil
 }
 
 // DeleteApplicationScope
 func (cli *Client) DeleteApplicationScope(name string) error {
-
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	request.Set("Authorization", "Bearer "+cli.token)
+	apiPath := fmt.Sprintf("/api/v2/access_management/scopes/%s", name)
+	events, _, errs := request.Clone().Delete(cli.url + apiPath).End()
+	if errs != nil {
+		return fmt.Errorf("error while calling DELETE on /api/v2/access_management/scopes/%s: %v", name, events.StatusCode)
+	}
+	if events.StatusCode != 204 {
+		return fmt.Errorf("failed deleting application scope, status code: %v", events.StatusCode)
+	}
 	return nil
 }

@@ -57,15 +57,38 @@ type ApplicationScope struct {
 	} `json:"categories"`
 }
 
-// ReadApplicationScope retrieves an application scope from the Aqua Enterprise API
-func (cli *Client) ReadApplicationScope(name string) (*ApplicationScope, error) {
+// GetApplicationScopes retrieves all application scopes from the Aqua API
+func (cli *Client) GetApplicationScopes() ([]ApplicationScope, error) {
+	var err error
+	var scopes []ApplicationScope
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
+	request.Set("Authorization", "Bearer "+cli.token)
+	apiPath := "/api/v2/access_management/scopes"
+	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
+	if errs != nil {
+		log.Println("failed to get application scope: ", events.StatusCode)
+		err = fmt.Errorf("failed to get application scopes: %v", errs)
+	}
+	if events.StatusCode == 200 {
+		err := json.Unmarshal([]byte(body), scopes)
+		if err != nil {
+			return nil, errors.Wrap(err, "could not unmarshal application scope response")
+		}
+	}
+	return scopes, err
+}
+
+// GetApplicationScope retrieves an application scope from the Aqua API by scope name
+func (cli *Client) GetApplicationScope(name string) (*ApplicationScope, error) {
+	var err error
 	as := &ApplicationScope{}
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/access_management/scopes/%s", name)
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	if errs != nil {
-		log.Println("failed to get application scopes: ", events.StatusCode)
+		log.Println("failed to get application scope: ", events.StatusCode)
+		err = fmt.Errorf("failed to get application scope: %s", name)
 	}
 	if events.StatusCode == 200 {
 		err := json.Unmarshal([]byte(body), as)
@@ -73,7 +96,10 @@ func (cli *Client) ReadApplicationScope(name string) (*ApplicationScope, error) 
 			return nil, errors.Wrap(err, "could not unmarshal application scope response")
 		}
 	}
-	return as, nil
+	if as.Name == "" {
+		err = fmt.Errorf("user not found: %s", name)
+	}
+	return as, err
 }
 
 // CreateApplicationScope creates a new application scope in Aqua Enterprise API

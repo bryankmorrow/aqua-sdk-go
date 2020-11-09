@@ -66,7 +66,7 @@ func (cli *Client) GetUsers() ([]User, error) {
 		err = json.Unmarshal([]byte(body), &response)
 		if err != nil {
 			log.Printf("Error calling func GetUser from %s%s, %v ", cli.url, apiPath, err)
-			//json: Unmarshal(non-pointer main.Request)
+			return nil, errors.Wrap(err, "could not unmarshal users response")
 		}
 	}
 	return response, err

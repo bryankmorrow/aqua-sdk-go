@@ -27,8 +27,7 @@ type NewPassword struct {
 }
 
 // GetUser - returns single Aqua user
-// Params: name: The name of user
-func (cli *Client) GetUser(name string) (User, error) {
+func (cli *Client) GetUser(name string) (*User, error) {
 	var err error
 	var response User
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
@@ -37,18 +36,21 @@ func (cli *Client) GetUser(name string) (User, error) {
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	if errs != nil {
 		log.Println(events.StatusCode)
+		err = fmt.Errorf("error calling %s", apiPath)
+		return nil, err
 	}
 	if events.StatusCode == 200 {
 		err = json.Unmarshal([]byte(body), &response)
 		if err != nil {
 			log.Printf("Error calling func GetUser from %s%s, %v ", cli.url, apiPath, err)
-			//json: Unmarshal(non-pointer main.Request)
+			return nil, err
 		}
 	}
 	if response.Name == "" {
 		err = fmt.Errorf("user not found: %s", name)
+		return nil, err
 	}
-	return response, err
+	return &response, err
 }
 
 // GetUsers - returns all Aqua users
@@ -73,8 +75,6 @@ func (cli *Client) GetUsers() ([]User, error) {
 }
 
 // CreateUser - creates single Aqua user
-// Params: name: The name of the Image Assurance Policy
-// Returns: The struct from types/users/user
 func (cli *Client) CreateUser(user User) error {
 	payload, err := json.Marshal(user)
 	if err != nil {

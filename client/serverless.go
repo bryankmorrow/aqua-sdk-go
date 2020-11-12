@@ -20,8 +20,8 @@ type ServerlessProject struct {
 	ComputeProvider    int      `json:"compute_provider"` // AWS = 1, Azure = 3
 	Author             string   `json:"author"`
 	Update             int      `json:"update,omitempty"`
-	AutoPull           bool     `json:"auto_pull,omitempty"`
-	AutoPullTime       string   `json:"auto_pull_time,omitempty"`
+	AutoPull           bool     `json:"auto_pull"`
+	AutoPullTime       string   `json:"auto_pull_time"`
 	AutoPullInProgress bool     `json:"auto_pull_in_progress,omitempty"`
 	SqsURL             string   `json:"sqs_url,omitempty"`
 	IncludeTags        []string `json:"include_tags,omitempty"`
@@ -118,7 +118,7 @@ func (cli *Client) UpdateServerlessProject(proj ServerlessProject) error {
 func (cli *Client) DeleteServerlessProject(name string) error {
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
-	apiPath := fmt.Sprintf("/api/v2/serverless/project/%s", name)
+	apiPath := fmt.Sprintf("/api/v2/serverless/projects/%s", name)
 	events, _, errs := request.Clone().Delete(cli.url + apiPath).End()
 	if errs != nil {
 		return fmt.Errorf("error while calling DELETE on /api/v2/serverless/project/%s: %v", name, events.StatusCode)

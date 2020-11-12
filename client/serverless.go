@@ -16,8 +16,10 @@ type ServerlessProject struct {
 	Description        string   `json:"description,omitempty"`
 	Username           string   `json:"username"`
 	Password           string   `json:"password,omitempty"`
-	Region             string   `json:"region"`
-	ComputeProvider    int      `json:"compute_provider"` // AWS = 1, Azure = 3
+	Region             string   `json:"region,omitempty"`          // AWS only
+	SubscriptionID     string   `json:"subscription_id,omitempty"` // Azure only
+	TenantID           string   `json:"tenant_id,omitempty"`       // Azure only
+	ComputeProvider    int      `json:"compute_provider"`          // AWS = 1, Azure = 3
 	Author             string   `json:"author"`
 	Update             int      `json:"update,omitempty"`
 	AutoPull           bool     `json:"auto_pull"`

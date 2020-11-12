@@ -70,7 +70,7 @@ func (cli *Client) GetApplicationScopes() ([]ApplicationScope, error) {
 		err = fmt.Errorf("failed to get application scopes: %v", errs)
 	}
 	if events.StatusCode == 200 {
-		err := json.Unmarshal([]byte(body), scopes)
+		err := json.Unmarshal([]byte(body), &scopes)
 		if err != nil {
 			return nil, errors.Wrap(err, "could not unmarshal application scope response")
 		}
@@ -81,7 +81,7 @@ func (cli *Client) GetApplicationScopes() ([]ApplicationScope, error) {
 // GetApplicationScope retrieves an application scope from the Aqua API by scope name
 func (cli *Client) GetApplicationScope(name string) (*ApplicationScope, error) {
 	var err error
-	as := &ApplicationScope{}
+	var response ApplicationScope
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
 	apiPath := fmt.Sprintf("/api/v2/access_management/scopes/%s", name)
@@ -91,19 +91,19 @@ func (cli *Client) GetApplicationScope(name string) (*ApplicationScope, error) {
 		err = fmt.Errorf("failed to get application scope: %s", name)
 	}
 	if events.StatusCode == 200 {
-		err := json.Unmarshal([]byte(body), as)
+		err := json.Unmarshal([]byte(body), &response)
 		if err != nil {
 			return nil, errors.Wrap(err, "could not unmarshal application scope response")
 		}
 	}
-	if as.Name == "" {
+	if response.Name == "" {
 		err = fmt.Errorf("user not found: %s", name)
 	}
-	return as, err
+	return &response, err
 }
 
 // CreateApplicationScope creates a new application scope in Aqua Enterprise API
-func (cli *Client) CreateApplicationScope(scope *ApplicationScope) error {
+func (cli *Client) CreateApplicationScope(scope ApplicationScope) error {
 	payload, err := json.Marshal(scope)
 	if err != nil {
 		return err

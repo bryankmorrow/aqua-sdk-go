@@ -12,14 +12,14 @@ import (
 
 // Role represents a local Aqua Role
 type Role struct {
-	Name        string        `json:"name"`
-	Description string        `json:"description"`
-	Author      string        `json:"author,omitempty"`
-	UpdatedAt   time.Time     `json:"updated_at"`
-	Permission  string        `json:"permission"`
-	Scopes      []string      `json:"scopes"`
-	Groups      []interface{} `json:"groups,omitempty"`
-	Users       []string      `json:"users,omitempty"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Author      string    `json:"author,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	Permission  string    `json:"permission"`
+	Scopes      []string  `json:"scopes"`
+	Groups      []string  `json:"groups,omitempty"`
+	Users       []string  `json:"users,omitempty"`
 }
 
 // Roles represents the API return for multiple roles

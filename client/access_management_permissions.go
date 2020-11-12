@@ -21,19 +21,11 @@ type PermissionSet struct {
 }
 
 type PermissionSets struct {
-	Count    int `json:"count"`
-	Page     int `json:"page"`
-	Pagesize int `json:"pagesize"`
-	Result   []struct {
-		Name        string    `json:"name"`
-		Description string    `json:"description"`
-		Author      string    `json:"author"`
-		UpdatedAt   time.Time `json:"updated_at"`
-		UIAccess    bool      `json:"ui_access"`
-		IsSuper     bool      `json:"is_super"`
-		Actions     []string  `json:"actions"`
-	} `json:"result"`
-	MoreDataAllPages int `json:"more_data_all_pages"`
+	Count            int             `json:"count"`
+	Page             int             `json:"page"`
+	Pagesize         int             `json:"pagesize"`
+	Result           []PermissionSet `json:"result"`
+	MoreDataAllPages int             `json:"more_data_all_pages"`
 }
 
 // GetPermissionSet - returns single Aqua permission set

@@ -62,7 +62,8 @@ func (cli *Client) GetUsers() ([]User, error) {
 	apiPath := fmt.Sprintf("/api/v1/users")
 	events, body, errs := request.Clone().Get(cli.url + apiPath).End()
 	if errs != nil {
-		log.Println(events.StatusCode)
+		err = fmt.Errorf("error calling %s", apiPath)
+		return nil, err
 	}
 	if events.StatusCode == 200 {
 		err = json.Unmarshal([]byte(body), &response)

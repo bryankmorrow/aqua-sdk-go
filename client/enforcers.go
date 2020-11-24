@@ -95,7 +95,7 @@ func (cli *Client) GetEnforcerGroup(name string) (*EnforcerGroup, error) {
 			return nil, err
 		}
 	}
-	if response.Logicalname == "" {
+	if response.ID == "" {
 		err = fmt.Errorf("enforcer group not found: %s", name)
 		return nil, err
 	}

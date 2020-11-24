@@ -82,7 +82,7 @@ func (cli *Client) GetEnforcerGroup(name string) (*EnforcerGroup, error) {
 	var response EnforcerGroup
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	request.Set("Authorization", "Bearer "+cli.token)
-	apiPath := "/api/v1/hosts/"
+	apiPath := "/api/v1/hostsbatch/"
 	events, body, errs := request.Clone().Get(cli.url+apiPath).Param("batch_name", name).Param("pagesize", "100").End()
 	if errs != nil {
 		err = fmt.Errorf("error calling %s", apiPath)
